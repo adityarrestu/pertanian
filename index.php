@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style/style.css">
         <title>Data Pertanian</title>
     </head>
     <body>
@@ -40,7 +41,7 @@
                         <table border="1" cellpadding="10" cellspacing="0">
             
                             <tr>
-                                <th>ID</th>
+                                <th>No.</th>
                                 <th>Nama Tanaman</th>
                                 <th>Hasil Panen</th>
                                 <th>Lama Tanam</th>
@@ -48,10 +49,10 @@
                                 <th>Tindakan</th>
                             </tr>
             
+                        <?php $i = 1; ?>
+                        <?php foreach($data_tani as $data) : ?>
                             <tr>      
-                                
-                            <?php foreach($data_tani as $data) : ?>
-                                <td><?= $data['id']; ?></td>
+                                <td><?= $i; ?></td>
                                 <td><?= $data['nama_tanaman']; ?></td>
                                 <td><?= $data['hasil_panen']; ?></td>
                                 <td><?= $data['lama_tanam']; ?></td>
@@ -61,10 +62,12 @@
                                     <a href="index.php?aksi=delete&id=<?= $data['id']; ?>">Hapus</a>
                                 </td>
 
-                            <?php endforeach; ?>
- 
                             </tr>
-                    
+
+                            <?php $i++ ?>
+
+                        <?php endforeach; ?>
+
                         </table>
                     
                 </fieldset>          
@@ -166,6 +169,8 @@
                 }
 
                 if(isset($_GET['id'])) :
+                    $id = $_GET['id'];
+                    $data_tani = query("SELECT * FROM nim177 WHERE id = $id")[0];
         ?>
                     <a href="index.php">&laquo; Home</a>
                     <a href="index.php?aksi=create"> (+) Tambah Data</a>
@@ -177,19 +182,19 @@
                                 <h2>Ubah Data</h2>
                             </legend>
 
-                            <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+                            <input type="hidden" name="id" value="<?= $id; ?>">
                             <ul>
                                 <li>
-                                    <label>Nama tanaman <input type="text" name="nm_tanaman"></label>
+                                    <label>Nama tanaman <input type="text" name="nm_tanaman" value="<?= $data_tani['nama_tanaman']; ?>"></label>
                                 </li>
                                 <li>
-                                    <label>Hasil panen <input type="number" name="hasil"> kg</label>
+                                    <label>Hasil panen <input type="number" name="hasil" value="<?= $data_tani['hasil_panen']; ?>"> kg</label>
                                 </li>
                                 <li>
-                                    <label>Lama tanam <input type="number" name="lama"> bulan</label>
+                                    <label>Lama tanam <input type="number" name="lama" value="<?= $data_tani['lama_tanam']; ?>"> bulan</label>
                                 </li>
                                 <li>
-                                    <label>Tanggal panen <input type="date" name="tgl_panen"></label>
+                                    <label>Tanggal panen <input type="date" name="tgl_panen" value="<?= $data_tani['tanggal_panen']; ?>"></label>
                                 </li>
                                 <li>
                                     <label>
@@ -221,7 +226,7 @@
                     $query = "DELETE FROM nim177 WHERE id = '$id'";
 
                     $hapus = mysqli_query($conn, $query);
-                    if($hapus && $_GET['aksi' == 'delete']) {
+                    if($hapus && $_GET['aksi'] == 'delete') {
                         header('Location: index.php');
                     }
                 }
