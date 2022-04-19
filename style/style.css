@@ -426,3 +426,59 @@ select {
 #kode-kategori {
     margin-left: 28px;
 }
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.halaman {
+    margin: 0 5px;
+    padding: 4px;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #38946e;
+    border-radius: 7px;
+    color: #38946e;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.next,
+.prev {
+    position: relative;
+    margin: 0 5px;
+    padding: 4px;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #38946e;
+    border-radius: 7px;
+}
+
+.next::before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #38946e;
+    border-right: 3px solid #38946e;
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.prev::before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #38946e;
+    border-right: 3px solid #38946e;
+    transform: rotate(225deg);
+    transition: 0.5s;
+}

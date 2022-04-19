@@ -27,14 +27,27 @@
                 return $rows;
             }
             
+            $jumlahDataPerHalaman = 5;
+            $jumlahData = count(query("SELECT * FROM nim177 ORDER BY tanggal_panen DESC"));
+            $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+            $halamanAktif = (isset($_GET['halaman'])) ? $_GET['halaman'] : 1;
+            $awalData = ($jumlahDataPerHalaman * $halamanAktif - $jumlahDataPerHalaman);
+
             $data_tani = query("SELECT * FROM nim177 ORDER BY tanggal_panen DESC");
         ?>
 
         <!-- fungsi tampil_data -->
         <?php function tampil_data($data_tani) { ?>
             <?php 
+                global $halamanAktif;
+                global $jumlahHalaman;
+                global $awalData;
+                global $jumlahDataPerHalaman;
+
                 // join tabel kategori dan nim177, relasi tabel untuk atribut kode_kategori
-                $query = query("SELECT * FROM kategori JOIN nim177 ON kategori.kode_kategori = nim177.kode_kategori");
+                $query = query("SELECT * FROM kategori JOIN nim177 ON kategori.kode_kategori = nim177.kode_kategori  
+                                ORDER BY tanggal_panen DESC 
+                                LIMIT $awalData, $jumlahDataPerHalaman");
             ?>
 
                     <fieldset>
@@ -77,6 +90,30 @@
                         <?php endforeach; ?>
 
                         </table>
+                        
+                        <!-- navigasi halaman -->
+                        <div class="nav">
+                            <?php if($halamanAktif > 1) : ?>
+                            <a class="prev" href="?halaman=<?= $halamanAktif - 1 ?>"></a>
+                    
+                            <?php endif; ?>
+    
+                            <?php for($i = 1; $i <= $jumlahHalaman; $i++) : ?> 
+                                <?php if($i == $halamanAktif) : ?>
+                                    <a class="halaman" href="?halaman=<?= $i; ?>" style="background: #38946e; color: #fff;"><?= $i; ?></a>
+    
+                                <?php else :?>
+                                    <a class="halaman" href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+    
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                            
+                            <?php if($halamanAktif < $jumlahHalaman) : ?>
+                                <a class="next" href="?halaman=<?= $halamanAktif + 1 ?>"></a>
+                    
+                            <?php endif; ?>
+                            
+                        </div>
                     
                 </fieldset>          
         <?php } ?>
