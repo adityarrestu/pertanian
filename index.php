@@ -10,6 +10,8 @@
     <body>
 
         <?php 
+            require 'settings.php';
+
             // koneksi ke database
             $conn = mysqli_connect("localhost", "root", "", "aditya_db");
 
@@ -25,34 +27,40 @@
                 return $rows;
             }
             
-            $data_tani = query("SELECT * FROM nim177");
+            $data_tani = query("SELECT * FROM nim177 ORDER BY tanggal_panen DESC");
         ?>
 
         <!-- fungsi tampil_data -->
         <?php function tampil_data($data_tani) { ?>
+            <?php 
+                // join tabel kategori dan nim177, relasi tabel untuk atribut kode_kategori
+                $query = query("SELECT * FROM kategori JOIN nim177 ON kategori.kode_kategori = nim177.kode_kategori");
+            ?>
+
                     <fieldset>
                         <legend>
                             <h2>Data Panen</h2>
                         </legend>
 
-
-                        <a href="index.php?aksi=create">Tambah data</a>
+                        <button class="btn-tambah"><a class="tambah" href="index.php?aksi=create">Tambah data</a></button>
             
-                        <table border="1" cellpadding="10" cellspacing="0">
+                        <table class="data-panen" border="1" cellpadding="10" cellspacing="0">
             
                             <tr>
                                 <th>No.</th>
+                                <th>Nama Kategori</th>
                                 <th>Nama Tanaman</th>
-                                <th>Hasil Panen</th>
-                                <th>Lama Tanam</th>
+                                <th>Hasil Panen  <br> (kilogram) </th>
+                                <th>Lama Tanam <br> (bulan) </th>
                                 <th>Tanggal Panen</th>
                                 <th>Tindakan</th>
                             </tr>
             
                         <?php $i = 1; ?>
-                        <?php foreach($data_tani as $data) : ?>
+                        <?php foreach($query as $data) : ?>
                             <tr>      
                                 <td><?= $i; ?></td>
+                                <td><?= $data['nama_kategori']; ?></td>
                                 <td><?= $data['nama_tanaman']; ?></td>
                                 <td><?= $data['hasil_panen']; ?></td>
                                 <td><?= $data['lama_tanam']; ?></td>
@@ -84,10 +92,11 @@
                     $hasil = mysqli_real_escape_string($conn, htmlspecialchars($data['hasil']));
                     $lama = mysqli_real_escape_string($conn, htmlspecialchars($data['lama']));
                     $tgl_panen = mysqli_real_escape_string($conn, htmlspecialchars($data['tgl_panen']));
+                    $kategori = mysqli_real_escape_string($conn, htmlspecialchars($data['kategori']));
 
-                    if(!empty($nm_tanaman) && !empty($hasil) && !empty($lama) && !empty($tgl_panen)) {
+                    if(!empty($nm_tanaman) && !empty($hasil) && !empty($lama) && !empty($tgl_panen) && !empty($kategori)) {
 
-                        $query = "INSERT INTO nim177 VALUES ('', '$nm_tanaman', '$hasil', '$lama', '$tgl_panen')";
+                        $query = "INSERT INTO nim177 VALUES ('', '$nm_tanaman', '$hasil', '$lama', '$tgl_panen', '$kategori')";
 
                         $simpan = mysqli_query($conn, $query);
                         if($simpan &&  isset($_GET['aksi']) == 'create') {
@@ -106,7 +115,21 @@
                         <h2>Tambah Data</h2>
                     </legend>
 
+                    <a href="index.php"> &laquo; Home</a>
+
                     <ul>
+                        <li>
+                            <select name="kategori">
+                                <?php 
+                                    // query menampilkan kategori pada combobox
+                                    $query = query("SELECT * FROM kategori ORDER BY id_kategori ASC");
+                                    foreach($query as $data) : ?>
+                                        <option value="<?= $data['kode_kategori'] ?>"><?= $data['nama_kategori']; ?></option>';
+                                    
+                                <?php endforeach; ?>
+
+                            </select>
+                        </li>
                         <li>
                             <label>Nama tanaman <input type="text" name="nm_tanaman"></label>
                         </li>
@@ -142,6 +165,7 @@
 
                 if(isset($_POST['btn_ubah'])) {
                     $id = $_POST['id'];
+                    $kategori = mysqli_real_escape_string($conn, htmlspecialchars($data['kategori']));
                     $nm_tanaman = mysqli_real_escape_string($conn, htmlspecialchars($data['nm_tanaman']));
                     $hasil = mysqli_real_escape_string($conn, htmlspecialchars($data['hasil']));
                     $lama = mysqli_real_escape_string($conn, htmlspecialchars($data['lama']));
@@ -153,7 +177,8 @@
                             nama_tanaman = '$nm_tanaman',
                             hasil_panen = '$hasil',
                             lama_tanam = '$lama',
-                            tanggal_panen = '$tgl_panen'
+                            tanggal_panen = '$tgl_panen',
+                            kode_kategori = '$kategori'
                             WHERE id = '$id'
                         ";
 
@@ -174,7 +199,7 @@
         ?>
                     <a href="index.php">&laquo; Home</a>
                     <a href="index.php?aksi=create"> (+) Tambah Data</a>
-                    <hr>
+                    <br>
 
                     <form action="" method="POST">
                         <fieldset>
@@ -184,6 +209,18 @@
 
                             <input type="hidden" name="id" value="<?= $id; ?>">
                             <ul>
+                                <li>
+                                    <select name="kategori">
+                                        <?php 
+                                            // query menampilkan kategori pada combobox
+                                            $query = query("SELECT * FROM kategori ORDER BY id_kategori DESC");
+                                            foreach($query as $data) : ?>
+                                                <option value="<?= $data['kode_kategori'] ?>"><?= $data['nama_kategori']; ?></option>';
+
+                                        <?php endforeach; ?>
+
+                                    </select>
+                                </li>
                                 <li>
                                     <label>Nama tanaman <input type="text" name="nm_tanaman" value="<?= $data_tani['nama_tanaman']; ?>"></label>
                                 </li>
@@ -204,6 +241,9 @@
                                 </li>
                                 <li>
                                     <p><?= isset($pesan) ? $pesan : ""; ?></p>
+                                </li>
+                                <li>
+                                    <button><a href="index.php?settings=read">Pengaturan</a></button>
                                 </li>
                             </ul>
 
@@ -239,7 +279,6 @@
             if(isset($_GET['aksi'])) {
                 switch($_GET['aksi']) {
                     case 'create':
-                        echo '<a href="index.php"> &laquo; Home</a>';
                         tambah($_POST);
                         break;
                     
@@ -259,9 +298,31 @@
                         break;
                 }
                 
+            } else if(isset($_GET['settings'])) {
+                switch($_GET['settings']) {
+                    case 'create':
+                        tambah_kategori($_POST);
+                        break;
+
+                    case 'read':
+                        settings($opsi);
+                        break;
+
+                    case 'update':
+                        ubah_kategori($_POST);
+                        break;
+
+                    case 'delete':
+                        hapus_kategori();
+                        break;
+
+                    default:
+                        break;
+                }
+
             } else {
                 tampil_data($data_tani);
-                
+
             }
 
         ?>    

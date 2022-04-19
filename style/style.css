@@ -6,3 +6,55 @@
     font-weight: 500;
 }
 
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+    font-size: 30px;
+}
+
+legend {
+    padding: 10px 15px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+fieldset {
+    padding: 30px;
+}
+
+.data-panen {
+    position: relative;
+    width: 1000px;
+    margin: 20px 30px 30px 30px;
+    border: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+    /* background: #797979; */
+}
+
+.data-panen tr th {
+    padding: 8px;
+    font-weight: 700;
+}
+
+.data-panen tr td {
+    padding: 15px;
+    text-align: center;
+}
+
+.btn-tambah {
+    padding: 10px 20px;
+    margin: 0 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 20px;    
+}
+
+.tambah {
+    text-decoration: none;
+}
