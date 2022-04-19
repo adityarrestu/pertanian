@@ -42,11 +42,11 @@
                             <h2>Data Panen</h2>
                         </legend>
 
-                        <button class="btn-tambah"><a class="tambah" href="index.php?aksi=create">Tambah data</a></button>
+                        <a class="btn tambah" href="index.php?aksi=create">Tambah data</a>
             
                         <table class="data-panen" border="1" cellpadding="10" cellspacing="0">
             
-                            <tr>
+                            <tr class="th">
                                 <th>No.</th>
                                 <th>Nama Kategori</th>
                                 <th>Nama Tanaman</th>
@@ -66,8 +66,8 @@
                                 <td><?= $data['lama_tanam']; ?></td>
                                 <td><?= $data['tanggal_panen']; ?></td>
                                 <td>
-                                    <a href="index.php?aksi=update&id=<?= $data['id']; ?>">Ubah</a>
-                                    <a href="index.php?aksi=delete&id=<?= $data['id']; ?>">Hapus</a>
+                                    <a class="btn ubah" href="index.php?aksi=update&id=<?= $data['id']; ?>">Ubah</a>
+                                    <a class="btn hapus" href="index.php?aksi=delete&id=<?= $data['id']; ?>">Hapus</a>
                                 </td>
 
                             </tr>
@@ -115,11 +115,12 @@
                         <h2>Tambah Data</h2>
                     </legend>
 
-                    <a href="index.php"> &laquo; Home</a>
+                    <a class="back" href="index.php"><span>Home</span></a>
 
                     <ul>
                         <li>
-                            <select name="kategori">
+                            <label for="kategori">Kategori</label>
+                            <select name="kategori" id="kategori">
                                 <?php 
                                     // query menampilkan kategori pada combobox
                                     $query = query("SELECT * FROM kategori ORDER BY id_kategori ASC");
@@ -131,21 +132,21 @@
                             </select>
                         </li>
                         <li>
-                            <label>Nama tanaman <input type="text" name="nm_tanaman"></label>
+                            <label>Nama tanaman <input type="text" name="nm_tanaman" id="nm-tanaman" autocomplete="off"></label>
                         </li>
                         <li>
-                            <label>Hasil panen <input type="number" name="hasil"> kg</label>
+                            <label>Hasil panen (kg) <input type="number" name="hasil" id="hasil"></label>
                         </li>
                         <li>
-                            <label>Lama tanam <input type="number" name="lama"> bulan</label>
+                            <label>Lama tanam (bulan) <input type="number" name="lama" id="lama"></label>
                         </li>
                         <li>
-                            <label>Tanggal panen <input type="date" name="tgl_panen"></label>
+                            <label>Tanggal panen <input type="date" name="tgl_panen" id="tgl-panen"></label>
                         </li>
                         <li>
                             <label>
-                                <button type="submit" name="btn_simpan">Simpan</button>
-                                <button type="reset" name="reset">Bersihkan</button>
+                                <button class="btn simpan" type="submit" name="btn_simpan">Simpan</button>
+                                <button class="btn bersihkan" type="reset" name="reset">Bersihkan</button>
                             </label>
                         </li>
                         <li>
@@ -197,19 +198,21 @@
                     $id = $_GET['id'];
                     $data_tani = query("SELECT * FROM nim177 WHERE id = $id")[0];
         ?>
-                    <a href="index.php">&laquo; Home</a>
-                    <a href="index.php?aksi=create"> (+) Tambah Data</a>
-                    <br>
-
                     <form action="" method="POST">
                         <fieldset>
                             <legend>
                                 <h2>Ubah Data</h2>
                             </legend>
 
+                            <div class="btn-container">
+                                <a class="back" href="index.php"><span>Home</span></a>
+                                <a class="plus" href="index.php?aksi=create"><span>Tambah Data</span></a>
+                            </div>
+
                             <input type="hidden" name="id" value="<?= $id; ?>">
                             <ul>
                                 <li>
+                                    <label>Kategori</label>
                                     <select name="kategori">
                                         <?php 
                                             // query menampilkan kategori pada combobox
@@ -222,28 +225,28 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label>Nama tanaman <input type="text" name="nm_tanaman" value="<?= $data_tani['nama_tanaman']; ?>"></label>
+                                    <label>Nama tanaman <input type="text" name="nm_tanaman" id="nm-tanaman" value="<?= $data_tani['nama_tanaman']; ?>"></label>
                                 </li>
                                 <li>
-                                    <label>Hasil panen <input type="number" name="hasil" value="<?= $data_tani['hasil_panen']; ?>"> kg</label>
+                                    <label>Hasil panen (kg) <input type="number" name="hasil" id="hasil" value="<?= $data_tani['hasil_panen']; ?>"></label>
                                 </li>
                                 <li>
-                                    <label>Lama tanam <input type="number" name="lama" value="<?= $data_tani['lama_tanam']; ?>"> bulan</label>
+                                    <label>Lama tanam (bulan) <input type="number" name="lama" id="lama" value="<?= $data_tani['lama_tanam']; ?>"></label>
                                 </li>
                                 <li>
-                                    <label>Tanggal panen <input type="date" name="tgl_panen" value="<?= $data_tani['tanggal_panen']; ?>"></label>
+                                    <label>Tanggal panen <input type="date" name="tgl_panen" id="tgl-panen" value="<?= $data_tani['tanggal_panen']; ?>"></label>
                                 </li>
                                 <li>
                                     <label>
-                                        <button type="submit" name="btn_ubah">Simpan Perubahan</button>
-                                        <button><a href="index.php?aksi=delete&id=<?= $_GET['id'] ?>">(x) Hapus Data Ini</a></button>
+                                        <a class="btn simpan" type="submit" name="btn_ubah">Simpan Perubahan</a>
+                                        <a class="btn bersihkan" href="index.php?aksi=delete&id=<?= $_GET['id'] ?>">(x) Hapus Data Ini</a>
                                     </label>
                                 </li>
                                 <li>
                                     <p><?= isset($pesan) ? $pesan : ""; ?></p>
                                 </li>
                                 <li>
-                                    <button><a href="index.php?settings=read">Pengaturan</a></button>
+                                    <a class="btn settings" href="index.php?settings=read">Kategori</a>
                                 </li>
                             </ul>
 

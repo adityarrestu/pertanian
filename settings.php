@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style/style.css">k
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/kategori.css">
         <title>Pengaturan Kategori</title>
     </head>
     <body>
@@ -37,12 +38,14 @@
                         <h2>Daftar Kategori</h2>
                     </legend>
 
-                    <button><a href="index.php">&laquo; Home</a></button>
-                    <button class="btn-tambah"><a class="tambah" href="index.php?settings=create">Tambah data</a></button>
+                    <div class="btn-container">
+                        <a class="back" href="index.php"><span>Home</span></a>
+                        <a class="plus-kategori" href="index.php?settings=create"><span>Tambah Kategori</span></a>
+                    </div>
                     
                     <table class="opsi-kategori" border="1" cellpadding="10" cellspacing="0">
     
-                        <tr>
+                        <tr class="th">
                             <th>No.</th>
                             <th>Kode Kategori</th>
                             <th>Nama Kategori</th>
@@ -56,8 +59,8 @@
                                 <td><?= $data['kode_kategori']; ?></td>
                                 <td><?= $data['nama_kategori']; ?></td>
                                 <td>
-                                    <a href="index.php?settings=update&id=<?= $data['id_kategori']; ?>">Ubah</a>
-                                    <a href="index.php?settings=delete&id=<?= $data['id_kategori']; ?>">Hapus</a>
+                                    <a class="btn ubah" href="index.php?settings=update&id=<?= $data['id_kategori']; ?>">Ubah</a>
+                                    <a class="btn hapus" href="index.php?settings=delete&id=<?= $data['id_kategori']; ?>">Hapus</a>
                                 </td>
                             </tr>
     
@@ -104,22 +107,22 @@
                         <h2>Tambah Kategori</h2>
                     </legend>
 
-                    <a href="index.php?settings=read"> &laquo; Kembali</a>
+                    <a class="back" href="index.php?settings=read"><span>Kembali</span></a>
 
                     <ul>
                         </li>
                         <li>
                             <label for="nama_kategori">Nama Kategori</label>
-                            <input type="text" name="nama_kategori" id="nama_kategori">
+                            <input id="nm-kategori" type="text" name="nama_kategori" id="nama_kategori">
                         </li>
                         <li>
                             <label for="kode_kategori">Kode Kategori</label>
-                            <input type="text" name="kode_kategori" id="kode_kategori">
+                            <input id="kode-kategori" type="text" name="kode_kategori" id="kode_kategori">
                         </li>
                         <li>
                             <label>
-                                <button type="submit" name="btn_simpan">Simpan</button>
-                                <button type="reset" name="reset">Bersihkan</button>
+                                <button class="btn simpan" type="submit" name="btn_simpan">Simpan</button>
+                                <button class="btn bersihkan" type="reset" name="reset">Bersihkan</button>
                             </label>
                         </li>
                         <li>
@@ -171,24 +174,26 @@
                                 <h2>Ubah Kategori</h2>
                             </legend>
 
-                            <a href="index.php?settings=read">Kembali</a>
-                            <a href="index.php?settings=create"> (+) Tambah Kategori</a>
-                            <br>
+                            <div class="btn-container">
+                                <a class="back" href="index.php?settings=read"><span>Kembali</span></a>
+                                <a class="plus-kategori" href="index.php?settings=create"><span>Tambah Kategori</span></a>
+                            </div>
+
 
                             <input type="hidden" name="id" value="<?= $id; ?>">
                             <ul>
                                 <li>
                                     <label for="kode_kategori">Kode Kategori</label>
-                                    <input type="text" name="kode_kategori" id="kode_kategori" value="<?= $opsi['kode_kategori'] ?>">
+                                    <input id="kode-kategori" type="text" name="kode_kategori" id="kode_kategori" value="<?= $opsi['kode_kategori'] ?>">
                                 </li>
                                 <li>
                                     <label for="nama_kategori">Nama Kategori</label>
-                                    <input type="text" name="nama_kategori" id="nama_kategori" value="<?= $opsi['nama_kategori'] ?>">
+                                    <input id="nm-kategori" type="text" name="nama_kategori" id="nama_kategori" value="<?= $opsi['nama_kategori'] ?>">
                                 </li>
                                 <li>
                                     <label>
-                                        <button type="submit" name="btn_ubah">Simpan Perubahan</button>
-                                        <button><a href="index.php?aksi=delete&id=<?= $_GET['id'] ?>">(x) Hapus Kategori Ini</a></button>
+                                        <a class="btn simpan" type="submit" name="btn_ubah">Simpan Perubahan</a>
+                                        <a class="btn bersihkan" href="index.php?aksi=delete&id=<?= $_GET['id'] ?>">Hapus Kategori Ini</a>
                                     </label>
                                 </li>
                                 <li>

@@ -12,49 +12,417 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #3a3a3b;
 }
 
 h2 {
     margin: 0;
     font-size: 30px;
+    color: #fff;
 }
 
 legend {
     padding: 10px 15px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(0, 0, 0, 0.2);
+    background: #38946e;
 }
 
 fieldset {
     padding: 30px;
+    background: #fff;
 }
 
+/* tabel */
 .data-panen {
     position: relative;
     width: 1000px;
-    margin: 20px 30px 30px 30px;
+    margin: 30px;
+    margin-top: 20px;
     border: 1px;
     border-color: rgba(0, 0, 0, 0.2);
-    /* background: #797979; */
 }
 
-.data-panen tr th {
+.data-panen tr th,
+.opsi-kategori tr th {
     padding: 8px;
     font-weight: 700;
 }
 
-.data-panen tr td {
-    padding: 15px;
+.data-panen tr td,
+.opsi-kategori tr td {
+    padding: 12px;
     text-align: center;
 }
 
-.btn-tambah {
-    padding: 10px 20px;
-    margin: 0 30px;
-    border: none;
-    border-radius: 25px;
-    font-size: 20px;    
+.th {
+    background: #38946e;
+    color: #fff;
 }
 
-.tambah {
+/* button */
+.btn {
+    position: relative;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-transform: uppercase;
     text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 500ms;
+    z-index: 1;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 500ms;
+    z-index: -1;
+}
+
+.ubah:hover::before,
+.hapus:hover::before {
+    transform: translateX(-100%);
+}
+
+.ubah::before,
+.hapus::before {
+    transform: translateX(0);
+}
+
+/* tombol ubah */
+.ubah {
+    border: 2px solid #3f31ff;
+    color: #fff;
+}
+
+.ubah::before {
+    background: #3f31ff;
+}
+
+.ubah:hover {
+    color: #3f31ff;
+}
+
+/* tombol hapus */
+.hapus {
+    left: 15px;
+    margin-right: 10px;
+    border: 2px solid #fd3f3f;
+    color: #fff;
+}
+
+.hapus::before {
+    background: #fd3f3f;
+}
+
+.hapus:hover {
+    color: #fd3f3f;
+}
+
+/* tombol tambah */
+.tambah {
+    padding: 10px 15px;
+    margin: 0 30px;
+    border: 3px solid #38946e;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #38946e;
+}
+
+.tambah:hover::before {
+    transform: translateX(0);
+}
+
+.tambah::before {
+    transform: translateX(-100%);
+    background: #38946e;
+}
+
+.tambah:hover {
+    color: #fff;
+}
+
+
+/* halaman inputan */
+ul {
+    padding: 10px 30px;
+}
+
+ul li {
+    list-style: none;
+    font-size: 20px;
+    margin: 12px 0;
+    width: 100%;
+}
+
+input {
+    width: 250px;
+    height: 35px;
+    padding: 5px 10px;
+    border: 2px solid #38946e;
+    border-radius: 10px;
+}
+
+input:focus,
+select:focus {
+    outline: 1px solid #38946e;
+
+}
+
+#nm-tanaman {
+    margin-left: 57px;
+}
+
+#hasil {
+    margin-left: 48px;
+}
+
+#lama {
+    margin-left: 14px;
+}
+
+#tgl-panen {
+    margin-left: 62px;
+}
+
+select {
+    margin-left: 118px;
+    width: 250px;
+    height: 35px;
+    padding: 2px 10px;
+    border: 2px solid #38946e;
+    border-radius: 10px;
+}
+
+.simpan:hover::before,
+.bersihkan:hover::before,
+.settings:hover:before  {
+    transform: translateX(-100%);
+}
+
+.simpan::before,
+.bersihkan::before,
+.settings::before {
+    transform: translateX(0);
+}
+
+/* tombol simpan */
+.simpan {
+    border: 2px solid #3f31ff;
+    color: #fff;
+}
+
+.simpan::before {
+    background: #3f31ff;
+}
+
+.simpan:hover {
+    color: #3f31ff;
+}
+
+/* tombol bersihkan */
+.bersihkan {
+    left: 10px;
+    border: 2px solid #fd3f3f;
+    color: #fff;
+}
+
+.bersihkan::before {
+    background: #fd3f3f;
+}
+
+.bersihkan:hover {
+    color: #fd3f3f;
+}
+
+.simpan, 
+.bersihkan {
+    margin-top: 20px;
+}
+
+/* tombol home */
+.back {
+    position: relative;
+    left: 10px;
+    background: #38946e;
+    color: #fff;
+    width: 130px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    overflow: hidden;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.back:hover {
+    box-shadow: 0 0.25px 10px #38946e;
+}
+
+.back::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(225deg);
+    transition: 0.5s;
+}
+
+.back:hover::before {
+    transform: rotate(225deg) translate(50px, -50px);
+}
+
+.back span {
+    margin-left: 20px;
+}
+
+.back::after {
+    content: '';
+    position: absolute;
+    left: -50px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(225deg) translate(50px, -50px);
+    transition: 0.5s;
+}
+
+.back:hover::after {
+    transform: rotate(225deg) translate(-50px, 50px);
+    transition: 0.5s;
+}
+
+/* tombol tambah */
+.plus {
+    position: relative;
+    left: 25px;
+    background: #38946e;
+    color: #fff;
+    width: 200px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    overflow: hidden;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.plus:hover,
+.plus-kateogri:hover {
+    box-shadow: 0 0.25px 10px #38946e;
+}
+
+.plus::before,
+.plus-kategori::before {
+    content: '';
+    position: absolute;
+    left: -55px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.plus:hover::before,
+.plus-kategori:hover::before {
+    transform: rotate(45deg) translate(50px, -50px);
+}
+
+.plus span,
+.plus-kateogri span {
+    margin-left: 20px;
+}
+
+.plus::after,
+.plus-kategori::after {
+    content: '';
+    position: absolute;
+    left: -55px;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg) translate(50px, -50px);
+    transition: 0.5s;
+}
+
+.plus:hover::after,
+.plus-kategori:hover::after {
+    transform: rotate(45deg) translate(-50px, 50px);
+    transition: 0.5s;
+}
+
+.btn-container {
+    display: flex;
+}
+
+/* tombol pengaturan */
+.settings {
+    top: 30px;
+    left: 340px;
+    border: 2px solid #666666;
+    color: #fff;
+}
+
+.settings::before {
+    background: #666666;
+}
+
+.settings:hover {
+    color: #666666;
+}
+
+/* tabel kategori */
+.opsi-kategori {
+    position: relative;
+    width: 600px;
+    margin: 30px;
+    margin-top: 20px;
+    border: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* tombol tambah */
+.plus-kategori {
+    position: relative;
+    left: 25px;
+    background: #38946e;
+    color: #fff;
+    width: 250px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    overflow: hidden;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+#nm-kategori {
+    margin-left: 20px;
+}
+
+#kode-kategori {
+    margin-left: 28px;
 }
